@@ -1,0 +1,600 @@
+@import "tailwindcss";
+
+:root {
+  /* Premium, warm editorial museum-inspired palette */
+  --bg: #f5f1ea;
+  --bg-2: #ece5da;
+  --text: #1d1d1d;
+  --muted: #7d776f;
+  --rose: #df7b66;
+  --rose-soft: #fda4ba;
+  --orange-warm: #fb923c;
+  --peach: #f3d4c0;
+
+  --font-inter: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-cormorant: var(--font-cormorant), Georgia, Garamond, serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--text);
+  scroll-behavior: auto; /* Handled smoothly by Lenis */
+}
+
+body {
+  font-family: var(--font-inter);
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  width: 100%;
+}
+
+/* =======================================================
+   CINEMATIC SCENES CORE ARCHITECTURE
+   ======================================================= */
+
+.scene-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.scene-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Custom radial gradient backgrounds */
+.bg-cream {
+  background: radial-gradient(circle at top, #faf7f2 0%, var(--bg) 55%, var(--bg-2) 100%);
+}
+
+.bg-peach {
+  /* Warm highlight combining cream with peach/rose tones */
+  background: radial-gradient(circle at center, #faf5f0 0%, #f7e6db 50%, #f3d4c0 100%);
+}
+
+.bg-sand {
+  background: radial-gradient(circle at bottom, #faf9f6 0%, var(--bg-2) 65%, #dfd8cb 100%);
+}
+
+.bg-ivory {
+  background: radial-gradient(circle at center, #fafaf7 0%, #f7f2ea 55%, #eae3d5 100%);
+}
+
+/* Immersive full-tone backgrounds */
+.bg-rose-full {
+  background: linear-gradient(
+    165deg,
+    #fce8e4 0%,
+    #f5c4b8 35%,
+    #eda898 65%,
+    #e8927f 100%
+  );
+}
+
+.bg-rose-full .scene-index,
+.bg-rose-full .scene-label {
+  color: rgba(29, 29, 29, 0.55);
+}
+
+/* Tall scenes — ateliê with multiple projects */
+.scene-container--tall {
+  height: auto;
+  min-height: 100vh;
+  padding: 8rem 0;
+  align-items: flex-start;
+  overflow: visible;
+}
+
+.scene-container--tall .scene-content {
+  height: auto;
+  align-items: flex-start;
+}
+
+/* Expressive scenes — richer composition, visible overflow */
+.scene-container--expressive {
+  overflow: visible;
+}
+
+.scene-container--finale {
+  min-height: 100vh;
+  padding-bottom: 6rem;
+}
+
+/* =======================================================
+   SCENE SECTION — multi-part layouts (atelier etc.)
+   ======================================================= */
+
+.scene-section {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+}
+
+.scene-section__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.scene-section--atelier {
+  padding-bottom: 8rem;
+}
+
+.scene-section__header {
+  position: relative;
+  z-index: 5;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1.5rem 4rem;
+}
+
+.scene-section__header-inner {
+  max-width: 900px;
+  width: 100%;
+  text-align: left;
+}
+
+.scene-section__body {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Atelier typography */
+.atelier-title {
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -3px;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.atelier-subtitle {
+  font-size: 1.05rem;
+  color: #555;
+  max-width: 480px;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* =======================================================
+   PROJECTS GRID — bold exhibition blocks
+   ======================================================= */
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.project-block {
+  position: relative;
+  min-height: 380px;
+  border-radius: 2px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-block:hover {
+  transform: translateY(-6px);
+}
+
+.project-block__visual {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-block:hover .project-block__visual {
+  transform: scale(1.04);
+}
+
+.project-block__grain {
+  background-image: radial-gradient(#fff 0.4px, transparent 0.4px);
+  background-size: 10px 10px;
+  mix-blend-mode: overlay;
+}
+
+.project-block__overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.05) 40%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  transition: opacity 0.4s ease;
+}
+
+.project-block:hover .project-block__overlay {
+  opacity: 0.85;
+}
+
+.project-block__number {
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.project-block__title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.project-block__desc {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.project-block__tag {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.35rem 0.6rem;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* =======================================================
+   PROCESS GRID — scene 08
+   ======================================================= */
+
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.process-block {
+  position: relative;
+  padding: 2rem 1.75rem 2rem 2rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(29, 29, 29, 0.07);
+  overflow: hidden;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.process-block__accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--step-accent, var(--rose));
+}
+
+.process-block__number {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--step-accent, var(--rose));
+  text-transform: uppercase;
+}
+
+.process-block__title {
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  color: var(--text);
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.process-block__desc {
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.7;
+  margin-top: auto;
+}
+
+/* =======================================================
+   SILENCE COMPOSITION — scene 09
+   ======================================================= */
+
+.silence-composition {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 3rem;
+  align-items: center;
+  min-height: 60vh;
+}
+
+@media (max-width: 700px) {
+  .silence-composition {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.silence-composition__accent {
+  width: 100%;
+  height: 280px;
+  background: linear-gradient(
+    180deg,
+    var(--rose) 0%,
+    var(--orange-warm) 50%,
+    var(--rose-soft) 100%
+  );
+  opacity: 0.85;
+}
+
+@media (max-width: 700px) {
+  .silence-composition__accent {
+    height: 6px;
+    width: 80px;
+  }
+}
+
+.silence-composition__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+/* =======================================================
+   FINALE — scene 10
+   ======================================================= */
+
+.finale-stripe {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--rose) 0%,
+    var(--orange-warm) 50%,
+    var(--rose-soft) 100%
+  );
+  z-index: 2;
+}
+
+.finale-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 2rem;
+}
+
+.finale-link {
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border: 1px solid rgba(29, 29, 29, 0.12);
+  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.finale-link:hover {
+  color: #fff;
+  background: var(--rose);
+  border-color: var(--rose);
+  transform: translateY(-2px);
+}
+
+/* Subtle editorial background grids */
+.scene-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: 
+    linear-gradient(rgba(29, 29, 29, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29, 29, 29, 0.02) 1px, transparent 1px);
+  background-size: 120px 120px;
+  mask-image: radial-gradient(circle, black 40%, transparent 90%);
+  pointer-events: none;
+}
+
+/* Finely-grained paper texture */
+.scene-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.025;
+  background-image: radial-gradient(#000 0.45px, transparent 0.45px);
+  background-size: 12px 12px;
+  pointer-events: none;
+}
+
+/* Responsive camera viewport contents */
+.scene-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  will-change: transform, opacity, filter;
+  transform-style: preserve-3d;
+}
+
+/* Premium Typography System */
+.scene-label {
+  display: block;
+  font-family: var(--font-inter);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 7px;
+  color: var(--muted);
+  margin-bottom: 35px;
+  text-transform: uppercase;
+}
+
+.scene-title {
+  font-family: var(--font-cormorant);
+  font-weight: 300;
+  font-size: clamp(3.2rem, 7.5vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -3px;
+  color: var(--text);
+  max-width: 900px;
+  will-change: transform;
+}
+
+.scene-description {
+  font-family: var(--font-inter);
+  margin-top: 45px;
+  max-width: 520px;
+  color: #4a4a4a;
+  line-height: 1.95;
+  font-size: 1.04rem;
+  font-weight: 300;
+  will-change: transform;
+}
+
+/* Editorial display typography */
+.text-display {
+  font-family: var(--font-cormorant);
+  font-weight: 300;
+  font-size: clamp(2.8rem, 6.5vw, 6.5rem);
+  line-height: 1.05;
+  letter-spacing: -2px;
+  color: var(--text);
+}
+
+.font-serif {
+  font-family: var(--font-cormorant);
+}
+
+.font-sans {
+  font-family: var(--font-inter);
+}
+
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, "Roboto Mono", monospace;
+}
+
+/* Accent text highlights */
+.text-accent {
+  color: var(--rose);
+}
+
+.text-accent-soft {
+  color: var(--rose-soft);
+}
+
+/* Scene label pattern */
+.scene-index {
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(29, 29, 29, 0.12);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(29, 29, 29, 0.35);
+}
+
+/* Selection aesthetics */
+::selection {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* =======================================================
+   RESPONSIVE DESIGN CORRECTIONS
+   ======================================================= */
+
+@media (max-width: 900px) {
+  .scene-title {
+    font-size: 4rem;
+    letter-spacing: -1.5px;
+  }
+  .scene-description {
+    font-size: 0.98rem;
+    line-height: 1.8;
+  }
+  .scene-label {
+    letter-spacing: 5px;
+  }
+}
+
+@media (max-width: 600px) {
+  .scene-container {
+    padding: 0 24px;
+  }
+  .scene-title {
+    font-size: 2.8rem;
+    letter-spacing: -1px;
+  }
+  .scene-description {
+    margin-top: 30px;
+  }
+  .text-display {
+    font-size: 2.4rem;
+    letter-spacing: -1px;
+  }
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
